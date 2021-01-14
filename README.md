@@ -41,7 +41,7 @@ celery worker --app=yourproject.celery
 All python API is in the `messaging` module:
 
 ```python
-from messaging import send_notification, send_data
+from firebase_notification.messaging import send_notification, send_data
 ```
 
 ### Sending a push notification
@@ -62,6 +62,10 @@ You can send a silent push notification with only data attached to trigger a con
 device by using this function. As with `send_notification` you can use the `FCMDevice` model to get to the registration ids
 
 ### `FCMDevice` - Model
+
+```python
+from firebase_notification.models import FCMDevice
+```
 
 You have multiple options to select a device to send a notification to:
 
