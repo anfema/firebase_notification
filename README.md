@@ -88,9 +88,9 @@ Create or update a device subscription, request is JSON:
 
 May raise validation error if `registration_id` is missing
 
-May raise permission denied error if `registration_id` belongs to other user when `FCM_USE_SESSION_USER` is enabled.
+Will overwrite the connected user to the calling session user if `FCM_USE_SESSION_USER` is enabled.
 
-### DELETE `device-registration/<id>`
+### DELETE `device-registration/<fcm_token>`
 
 Remove a device from all subscribed targets, body is empty.
 
