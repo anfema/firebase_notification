@@ -1,4 +1,3 @@
-import json
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound
@@ -24,8 +23,6 @@ class DeviceRegistrationViewSet(ViewSet):
         registration_target = request.data.get('registration_target')
         if registration_target is None:
             registration_target = {}
-        else:
-            registration_target = json.loads(registration_target)
 
         try:
             fcm_device = FCMDevice.objects.get(registration_id=registration_id)
