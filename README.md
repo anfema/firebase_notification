@@ -1,11 +1,35 @@
 ## Installation and requirements
 
-1. Add `firebase_notifications` to requirements.txt/Pipfile/project.toml
+Please refer to [celery documentation](https://docs.celeryproject.org/en/stable/django/first-steps-with-django.html) on how to integrate celery before you start with this.
+
+1. Add `firebase_notifications` to `requirements.txt`/`Pipfile`/`project.toml`
 2. Install requirements
 3. Add application to django applications
+```python
+INSTALLED_APPS = [
+    ...
+    'firebase_notification'
+    ...
+```
 4. Update `settings.py` with the keys described below
-5. Migrate to create DB-Tables
-6. Register URLs
+```python
+# Firebase settings
+FCM_USE_SESSION_USER = False
+FCM_API_KEY = 'foobar'
+```
+5. Migrate to create DB-Tables: `python manage.py migrate`
+6. Register URLs in `urls.py`
+```python
+urlpatterns = [
+    ...
+    path('', include('firebase_notification.urls')),
+    ...
+]
+```
+7. Make sure to run a celery worker in parallel to your python application server:
+```bash
+celery worker --app=yourproject.celery
+```
 
 ## Required Settings
 
@@ -14,22 +38,40 @@
 
 ## Python API
 
-TODO
+All python API is in the `messaging` module:
+
+```python
+from messaging import send_notification, send_data
+```
+
+### Sending a push notification
+
+```python
+def send_notification(registration_ids: RegistrationIds, message_body: str, message_title: str, **kwargs)
+```
+
+To send a notification to one or more devices call this function with a list of registration ids. To fetch the needed registration ids you can use the `FCMDevice` model to filter out devices you want to process
+
+### Sending a data-only push notification (aka. silent push)
+
+```python
+def send_data(registration_ids: RegistrationIds, data_message: dict, **kwargs)
+```
+
+You can send a silent push notification with only data attached to trigger a content download on the
+device by using this function. As with `send_notification` you can use the `FCMDevice` model to get to the registration ids
+
+### `FCMDevice` - Model
+
+You have multiple options to select a device to send a notification to:
+
+1. Just send to all devices of a `platform`
+2. If user to device registration is enabled (`FCM_USE_SESSION_USER`) you can use the `user` attribute
+3. Furthermore you can use the JSON field `registration_target` to save any additional meta-data to the model for the application logic to filter for (like user preferences on what push notifications the user wants to subscribe to, etc.)
+
+Please be sure to only send notifications to devices that have the `is_active` flag set. The flag is updated when calling the FCM API and getting an error to avoid spamming unregistered or blocked devices to the API.
 
 ## Rest API
-
-### GET `device-registration/<id>`
-
-Fetch device registration, response is JSON:
-
-```json
-{
-    "registration_id": "<id>",
-    "registration_target": {
-        "key": "value"
-    }
-}
-```
 
 ### POST `device-registration`
 
