@@ -11,7 +11,6 @@ from .models import FCMDevice
 from .serializers import FCMDeviceSerializer
 
 
-# Create your views here.
 class DeviceRegistrationViewSet(ViewSet):
     lookup_field = 'registration_id'
 
