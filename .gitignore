@@ -5,3 +5,4 @@ sdist
 dist/
 build/
 *.egg-info
+.venv/**
