@@ -34,7 +34,7 @@ celery worker --app=yourproject.celery
 ## Required Settings
 
 - `FCM_API_KEY`: API key for fcm service
-- `FCM_USE_SESSION_USER`: If `True` require the connection of a device registration to a django user
+- `FCM_USE_SESSION_USER`: If `True` require the connection of a device registration to a django user, if `False` the `FCMDevice` class will have no user field.
 
 ## Python API
 
