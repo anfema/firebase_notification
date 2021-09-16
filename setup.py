@@ -59,7 +59,7 @@ with open("README.md", "r") as fd:
 
 setuptools.setup(
     name="firebase_notification",
-    version="1.0.0",
+    version="1.0.1",
     author="anfema GmbH",
     author_email="admin@anfe.ma",
     description="Firebase Notifications for Django",
