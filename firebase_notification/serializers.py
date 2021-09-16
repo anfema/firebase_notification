@@ -4,6 +4,6 @@ from .models import FCMDevice
 
 
 class FCMDeviceSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = FCMDevice
-		fields = ('registration_id', 'registration_target')
+    class Meta:
+        model = FCMDevice
+        fields = ('registration_id', 'registration_target')
