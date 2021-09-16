@@ -1,8 +1,12 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.postgres.fields import JSONField
 from django.contrib.auth import get_user_model
 from django.conf import settings
+
+try:
+	from django.db.models import JSONField
+except ImportError:
+	from django.contrib.postgres.fields import JSONField
 
 
 class FCMDevice(models.Model):
