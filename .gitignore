@@ -1,10 +1,15 @@
 __pycache__
 *.pyc
 *.pyo
-sdist
+sdist/
 dist/
 build/
 *.egg-info
+
+venv/
+
+.idea/
+.vscode/
 
 db.sqlite3
 example_proj/settings_local.py
