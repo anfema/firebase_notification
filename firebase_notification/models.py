@@ -1,7 +1,6 @@
+from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth import get_user_model
-from django.conf import settings
 
 try:
     from django.db.models import JSONField
@@ -18,10 +17,10 @@ class FCMDevice(models.Model):
 
     registration_id = models.CharField(unique=True, max_length=255)
     user = models.ForeignKey(
-        get_user_model(),
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        null=not settings.FCM_USE_SESSION_USER,
-        blank=not settings.FCM_USE_SESSION_USER
+        null=True,
+        blank=True,
     )
     registration_target = JSONField(blank=True, default=dict)
     is_active = models.BooleanField(default=True, help_text=_("Inactive devices will not be sent notifications"))
@@ -33,4 +32,4 @@ class FCMDevice(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return 'Registration <{}> for device on {}'.format(str(self.registration_target), self.platform)
+        return f'Registration <{self.registration_target}> for device on {self.platform}'

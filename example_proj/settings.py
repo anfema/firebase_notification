@@ -128,7 +128,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'  # or: BigAutoField
 
 # firebase_notification Settings
 
-FCM_USE_SESSION_USER = None
+FCM_USE_SESSION_USER = True
 FCM_API_KEY = 'foobar'
 
 
